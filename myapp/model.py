@@ -1,5 +1,5 @@
 import os
-
+import pickle
 
 class Model:
     def __init__(self):
@@ -18,3 +18,13 @@ class Model:
             Символ-предсказание 
         '''
         # your code here
+        with open(os.path.join('myapp', 'labels_dict.pkl'),'rb') as f:
+            labels_dict = pickle.load(f)
+
+        with open(os.path.join('myapp', 'model.pkl'),'rb') as f:
+            model = pickle.load(f)
+
+        x = x.reshape(1,-1)
+        pred = model.predict(x)
+
+        return labels_dict[int(pred)]
